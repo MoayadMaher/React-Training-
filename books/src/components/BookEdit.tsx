@@ -9,7 +9,7 @@ function BookEdit({ book, onSubmit }: any) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit();
+    onSubmit(book.id, title);
   };
 
   return (
