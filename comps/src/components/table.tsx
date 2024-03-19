@@ -1,12 +1,24 @@
-function Table({ data }: any) {
-  const rederedRow = data.map((fruit: any) => {
-    return (
-      <tr className="border" key={fruit.name}>
-        <td className="p-3">{fruit.name}</td>
-        <td className="p-3">
-          <div className={`p-3 m-2 ${fruit.color}`}></div>
+import { Fragment } from "react";
+
+function Table({ data, config, keyFn }: any) {
+  const renderedHeader = config.map((column: any) => {
+    if (column.header) {
+      return <Fragment key={column.label}>{column.header()}</Fragment>;
+    }
+    return <th key={column.label}>{column.label}</th>;
+  });
+
+  const renderedRow = data.map((rowData: any) => {
+    const renderedCells = config.map((column: any) => {
+      return (
+        <td className="p-2" key={column.label}>
+          {column.render(rowData)}
         </td>
-        <td>{fruit.score}</td>
+      );
+    });
+    return (
+      <tr className="border-b" key={keyFn(rowData)}>
+        {renderedCells}
       </tr>
     );
   });
@@ -14,13 +26,9 @@ function Table({ data }: any) {
   return (
     <table className="table-auto border-spacing-2">
       <thead>
-        <tr className="border-b-2">
-          <th>Fruit</th>
-          <th>Color</th>
-          <th>Score</th>
-        </tr>
+        <tr className="border-b-2">{renderedHeader}</tr>
       </thead>
-      <tbody> {rederedRow} </tbody>
+      <tbody>{renderedRow}</tbody>
     </table>
   );
 }
