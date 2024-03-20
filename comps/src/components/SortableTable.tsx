@@ -1,29 +1,11 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import useSort from "../hooks/use-sort";
 import Table from "./table";
 import { GoArrowSmallDown, GoArrowSmallUp } from "react-icons/go";
 
 function SortableTable(props: any) {
-  const [sortOrder, setSortOrder] = useState<string | null>(null);
-  const [sortBy, setSortBy] = useState<string | null>(null);
   const { config, data }: any = props;
-
-  const handleClick = (label: string) => {
-    if (sortBy && label !== sortBy) {
-      setSortOrder("asc");
-      setSortBy(label);
-      return;
-    }
-    if (sortOrder === null) {
-      setSortOrder("asc");
-      setSortBy(label);
-    } else if (sortOrder === "asc") {
-      setSortOrder("desc");
-      setSortBy(label);
-    } else {
-      setSortOrder(null);
-      setSortBy(null);
-    }
-  };
+  const { setSortColumn, sortOrder, sortBy, sotedData } = useSort(data, config);
 
   const updatedConfig = config.map((column: any) => {
     if (!column.sortValue) {
@@ -34,7 +16,7 @@ function SortableTable(props: any) {
       header: () => (
         <th
           className="cursor-pointer hover:bg-gray-100"
-          onClick={() => handleClick(column.label)}
+          onClick={() => setSortColumn(column.label)}
         >
           <div className="flex items-center">
             {getIcons(column.label, sortOrder, sortBy)}
@@ -44,26 +26,6 @@ function SortableTable(props: any) {
       ),
     };
   });
-
-  // Only sort if sortOrder and sortBy not null
-  // Make a copy of the data array before sorting (never modify props or state directly)
-  // Find the sortValue function for the column we are sorting by
-  let sotedData = data;
-  if (sortOrder && sortBy) {
-    const { sortValue } = config.find((column: any) => column.label === sortBy);
-    sotedData = [...data].sort((a: any, b: any): any => {
-      const sortValueA = sortValue(a);
-      const sortValueB = sortValue(b);
-
-      const reverse = sortOrder === "asc" ? 1 : -1;
-
-      if (typeof sortValueA === "string") {
-        return sortValueA.localeCompare(sortValueB) * reverse;
-      } else {
-        return (sortValueA - sortValueB) * reverse;
-      }
-    });
-  }
 
   return <Table {...props} config={updatedConfig} data={sotedData} />;
 }
