@@ -2,6 +2,7 @@
 import { useReducer } from "react";
 import Button from "../components/Button";
 import Panel from "../components/Panel";
+import { produce } from "immer";
 
 // For reducer we always dfine the action type as a value to prevent making and typo
 const INCREMENT_COUNT: string = "increment";
@@ -17,20 +18,25 @@ interface state {
 const reducer = (state: state, action: any) => {
   switch (action.type) {
     case INCREMENT_COUNT:
-      return { ...state, count: state.count + 1 };
+      state.count++;
+      return;
     case DECREMENT_COUNT:
-      return { ...state, count: state.count - 1 };
+      state.count--;
+      return;
     case ADD_VALUE:
-      return { ...state, count: state.count + state.valueToAdd, valueToAdd: 0 };
+      state.count += state.valueToAdd;
+      state.valueToAdd = 0;
+      return;
     case SET_VALUE_TO_ADD:
-      return { ...state, valueToAdd: action.payload };
+      state.valueToAdd = action.payload;
+      return;
     default:
-      return state;
+      return;
   }
 };
 
 function CounterPage({ initialCount }: { initialCount: number }) {
-  const [state, dispatch] = useReducer(reducer, {
+  const [state, dispatch] = useReducer(produce(reducer), {
     count: initialCount,
     valueToAdd: 0,
   });
@@ -70,7 +76,7 @@ function CounterPage({ initialCount }: { initialCount: number }) {
           Increment
         </Button>
         <Button danger onClick={decrement}>
-          Increment
+          decrement
         </Button>
       </div>
       <form onSubmit={handleSubmit}>
