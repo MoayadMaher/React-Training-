@@ -1,0 +1,81 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Myra"
+    },
+    {
+      "name": "Elsie Price",
+      "id": 3
+    },
+    {
+      "name": "Harold Strosin",
+      "id": 4
+    },
+    {
+      "name": "Mr. Sheldon Durgan",
+      "id": 5
+    },
+    {
+      "name": "Juana Stamm",
+      "id": 6
+    },
+    {
+      "name": "Miss Anne Miller",
+      "id": 7
+    },
+    {
+      "name": "Tonya Ullrich",
+      "id": 10
+    }
+  ],
+  "albums": [
+    {
+      "id": 10,
+      "title": "hiking Trip",
+      "userId": 1
+    },
+    {
+      "userId": 1,
+      "title": "Modern Rubber Soap",
+      "id": 11
+    },
+    {
+      "userId": 3,
+      "title": "Unbranded Soft Bike",
+      "id": 14
+    },
+    {
+      "userId": 7,
+      "title": "Sleek Cotton Salad",
+      "id": 15
+    },
+    {
+      "userId": 10,
+      "title": "Unbranded Soft Pizza",
+      "id": 16
+    },
+    {
+      "userId": 10,
+      "title": "Rustic Cotton Cheese",
+      "id": 17
+    },
+    {
+      "userId": 1,
+      "title": "Bespoke Cotton Bike",
+      "id": 19
+    }
+  ],
+  "photos": [
+    {
+      "albumId": 10,
+      "url": "https://loremflickr.com/150/150/abstract?lock=38665",
+      "id": 1
+    },
+    {
+      "albumId": 10,
+      "url": "https://loremflickr.com/150/150/abstract?lock=93494",
+      "id": 3
+    }
+  ]
+}
